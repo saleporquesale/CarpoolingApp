@@ -8,6 +8,8 @@ package conexiones.Http;
 import Auxiliares.Constantes;
 import com.sun.net.httpserver.HttpServer;
 import conexiones.Http.peticiones.LoginHandler;
+import conexiones.Http.peticiones.PerfilAmigosHandler;
+import conexiones.Http.peticiones.SignUpHandler;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -26,11 +28,13 @@ public class ServidorHTTP {
     private ServidorHTTP(){
         try {
             InetAddress direcionIP = InetAddress.getByName(Constantes.Constante_IP);
-            _Servidor = HttpServer.create(new InetSocketAddress(direcionIP,Constantes.Constante_Puerto),0);
+            this._Servidor = HttpServer.create(new InetSocketAddress(direcionIP,Constantes.Constante_Puerto),0);
             System.out.println("server started at " + Constantes.Constante_Puerto+ " at " + 
-                    _Servidor.getAddress().getHostString());
-            _Servidor.createContext("/", new LoginHandler());
-            _Servidor.setExecutor(null);
+                    this._Servidor.getAddress().getHostString());
+            this._Servidor.createContext("/", new LoginHandler());
+            this._Servidor.createContext("/SignUp", new SignUpHandler());
+            this._Servidor.createContext("/Perfil/Amigos", new PerfilAmigosHandler());
+            this._Servidor.setExecutor(null);
         } catch (UnknownHostException ex) {
             Logger.getLogger(ServidorHTTP.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

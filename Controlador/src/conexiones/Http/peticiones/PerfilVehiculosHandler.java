@@ -25,7 +25,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class LoginHandler implements HttpHandler {
+public class PerfilVehiculosHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -47,7 +47,7 @@ public class LoginHandler implements HttpHandler {
                 os.write(Constantes.Constante_OK.getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(LoginHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PerfilVehiculosHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

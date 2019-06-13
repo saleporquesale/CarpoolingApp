@@ -17,42 +17,42 @@ import java.util.logging.Logger;
  * @author jeja1
  */
 public class ConexionBase {
-    
+
     private static ConexionBase _Instancia;
     private Connection _Conecion;
-    
-    
-    private ConexionBase(){
+
+    private ConexionBase() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             _Conecion = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "proyecto");
-         } catch (SQLException ex) {
+        } catch (SQLException ex) {
             try {
                 throw new SQLException(ex);
             } catch (SQLException ex1) {
                 Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex1);
             }
-         } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             throw new ClassCastException(ex.getMessage());
-         }
+        }
     }
-    
-    public static ConexionBase getInstancia(){
-        if(_Instancia == null){
+
+    public static ConexionBase getInstancia() {
+        if (_Instancia == null) {
             _Instancia = new ConexionBase();
         }
         return _Instancia;
     }
-    
-    public boolean guardar(String msj) throws SQLException{try{
-         PreparedStatement consulta;
+
+    public boolean signUp(String pNombre, int pId, String pTelefono, String pCorreo) throws SQLException {
+        try {
+            PreparedStatement consulta;
+            //Query del structed procedure para la creacion del usuario
             consulta = this._Conecion.prepareStatement("INSERT INTO prueba (Mensaje) VALUES(?)");
-            consulta.setString(1,msj);
-         consulta.executeUpdate();
-      }catch(SQLException ex){
-         throw new SQLException(ex);
-      }
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
         return true;
     }
-    
+
 }

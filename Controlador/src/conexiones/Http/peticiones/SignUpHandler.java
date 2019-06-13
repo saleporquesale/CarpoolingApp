@@ -25,7 +25,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class LoginHandler implements HttpHandler {
+public class SignUpHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -38,16 +38,24 @@ public class LoginHandler implements HttpHandler {
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
+                JSONObject JSONdatic = new JSONObject();
+                JSONdatic.put("id", JSONIngreso.get("id"));
                 FileWriter archibo = new FileWriter(Constantes.Constantes_ArchivoDATIC,true);
                 PrintWriter esctritura = new PrintWriter(archibo);
-                esctritura.println(JSONIngreso.toJSONString());
+                esctritura.println(JSONdatic.toJSONString());
                 esctritura.close();
+                ConexionBase.getInstancia().signUp(JSONIngreso.get("nombre").toString(),
+                        Integer.parseInt(JSONIngreso.get("id").toString()),
+                        JSONIngreso.get("telefono").toString(),
+                        JSONIngreso.get("correo").toString());
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
                 os.write(Constantes.Constante_OK.getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(LoginHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SignUpHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(SignUpHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
