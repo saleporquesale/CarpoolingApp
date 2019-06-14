@@ -101,7 +101,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/ModeloET"
+                android:id="@+id/modeloET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/textView16"

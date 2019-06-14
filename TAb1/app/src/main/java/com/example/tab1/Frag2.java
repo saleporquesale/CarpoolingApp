@@ -124,7 +124,7 @@ public class Frag2 extends Fragment {
                 postDataParams.put("id", id.getText().toString());
                 postDataParams.put("telefono", telefono.getText().toString());
                 postDataParams.put("correo", correo.getText().toString());
-                return RequestHandler.sendPost("http://172.18.1.184:9090/SignUp",postDataParams);
+                return RequestHandler.sendPost(Constante.url+"SignUp",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());

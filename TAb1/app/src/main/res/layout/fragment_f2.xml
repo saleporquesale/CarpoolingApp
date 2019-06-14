@@ -122,39 +122,13 @@
                 android:includeFontPadding="false"
                 android:text="@string/facebook" />
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fbBtn"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp">
-
-                <RadioButton
-                    android:id="@+id/Funcionario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/funcionarioRBtn"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <RadioButton
-                    android:id="@+id/estudianteRBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/estudianteRBtn"
-                    android:textColor="@color/colorPrimaryDark" />
-
-            </RadioGroup>
-
             <TextView
                 android:id="@+id/terminosYcondTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/radioGroup"
+                android:layout_below="@+id/fbBtn"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="25dp"
                 android:text="@string/terminosYcondiciones"
                 android:textColor="@color/colorPrimaryDark" />
 

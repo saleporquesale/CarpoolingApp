@@ -102,7 +102,7 @@ public class Frag1 extends Fragment {
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("id", id.getText().toString());
                 postDataParams.put("clave", password.getText().toString());
-                return RequestHandler.sendPost("http://172.18.1.184:9090/",postDataParams);
+                return RequestHandler.sendPost(Constante.url,postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());
