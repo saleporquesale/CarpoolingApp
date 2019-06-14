@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".viajesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/miViaje"
+                android:textColor="@color/colorPrimaryDark"
+                tools:layout_editor_absoluteX="34dp"
+                tools:layout_editor_absoluteY="24dp" />
+
+            <ListView
+                android:id="@+id/amigosAgregadosViajeLV"
+                android:layout_width="375dp"
+                android:layout_height="300dp"
+                android:layout_below="@+id/textView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/colorAccent">
+
+            </ListView>
+
+            <Button
+                android:id="@+id/agregarAmigosViajeBtn"
+                android:layout_width="50dp"
+                android:layout_height="41dp"
+                android:layout_alignTop="@+id/textView3"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/colorAccent"
+                android:drawableBottom="@drawable/ic_person_add_black_24dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amigosAgregadosViajeLV"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="@string/seleccionarVehiculo" />
+
+            <Spinner
+                android:id="@+id/vehiculosSpiner"
+                android:layout_width="395dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="375dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vehiculosSpiner"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="@string/condiciónViaje" />
+
+            <Button
+                android:id="@+id/crearViajeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView5"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/crearViajeBtn" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

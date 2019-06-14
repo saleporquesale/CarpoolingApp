@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Frag1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/iniciarSesionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="168dp"
+            android:layout_marginBottom="340dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="@string/iniciarSesionBtn"
+            android:textColor="@color/colorAccent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+        <EditText
+            android:id="@+id/passwordETL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/iniciarSesionBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/idETL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/passwordETL"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/idTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/passwordTV"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_toStartOf="@+id/idETL"
+            android:text="@string/id"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/passwordTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/iniciarSesionBtn"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_toStartOf="@+id/passwordETL"
+            android:text="@string/contraseñaTV"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</FrameLayout>
