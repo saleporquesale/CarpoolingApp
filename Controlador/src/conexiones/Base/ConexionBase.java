@@ -45,11 +45,18 @@ public class ConexionBase {
         return _Instancia;
     }
 
-    public void signUp(String pNombre, int pId, String pTelefono, String pCorreo) throws SQLException {
+    public void signUp(String pNombre, int pId, String pTelefono, String pCorreo,
+            int pTipo) throws SQLException {
         try {
             PreparedStatement consulta;
             //Query del structed procedure para la creacion del usuario
-            consulta = this._Conexion.prepareStatement("INSERT INTO prueba (Mensaje) VALUES(?)");
+            consulta = this._Conexion.prepareStatement("call Registro(?,?,?,?,?,?)");
+            consulta.setInt(1, pId);
+            consulta.setString(2, pNombre);
+            consulta.setString(3, pNombre);
+            consulta.setString(4, pCorreo);
+            consulta.setString(5, pTelefono);
+            consulta.setInt(6, pTipo);
             consulta.executeUpdate();
         } catch (SQLException ex) {
             throw new SQLException(ex);
