@@ -48,6 +48,7 @@ public class Frag1 extends Fragment {
                 resultado=comprobarPassword()&&resultado;
                 if(resultado)
                 {
+
                     RequestAsync post= (RequestAsync) new RequestAsync().execute();
                     String resultadoPost= null;
                     try {

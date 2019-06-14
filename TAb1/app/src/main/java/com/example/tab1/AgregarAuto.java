@@ -32,7 +32,7 @@ public class AgregarAuto extends AppCompatActivity
         numeroPasajerosET=findViewById(R.id.numeroPasajerosET);
         guardarAutoBtn=findViewById(R.id.guardarAutoBtn);
         idUser=getIntent().getStringExtra("idKey");
-        //Guardar auto
+        //Guardar auto btn
         guardarAutoBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -42,13 +42,14 @@ public class AgregarAuto extends AppCompatActivity
                 String placa=placaET.getText().toString();
                 String marca=marcaET.getText().toString();
                 String modelo=modeloET.getText().toString();
-                int numeroPasajeros=Integer.parseInt(numeroPasajerosET.getText().toString());
+                String numeroPasajeros=numeroPasajerosET.getText().toString();
                 //Verificando datos
-                if(verificarCampos(placa,marca,modelo,numeroPasajeros))
-                {
+                boolean verificarCampos=verificarCampos(placa,marca,modelo,numeroPasajeros);
+                Toast.makeText(getApplicationContext(),"VereficarCarmpos:"+verificarCampos,Toast.LENGTH_LONG).show();
+                if(verificarCampos) {
                     //Enviando datos
-                    RequestAsync post= (RequestAsync) new RequestAsync().execute();
-                    String resultadoPost= null;
+                    RequestAsync post = (RequestAsync) new RequestAsync().execute();
+                    String resultadoPost = null;
                     //Obteniendo respuesta
                     try {
                         resultadoPost = post.get();
@@ -57,20 +58,21 @@ public class AgregarAuto extends AppCompatActivity
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(resultadoPost.contains("OK"))
-                    {
-                        Intent irMenu= new Intent(getApplicationContext(),MenuBottom.class);
-                        irMenu.putExtra("idKey",idUser);
+                    if (resultadoPost.contains("OK")) {
+                        Intent irMenu = new Intent(getApplicationContext(), MenuBottom.class);
+                        irMenu.putExtra("idKey", idUser);
                         startActivity(irMenu);
                     }
+
                 }
             }
         });
     }
     //Verificadores de campos
-    private boolean verificarCampos(String placa,String marca,String modelo,int numeroPasajeros)
+    private boolean verificarCampos(String placa,String marca,String modelo,String numeroPasajeros)
     {
         boolean resultado=revisarCampo(placa,20,"Ingrese la placa de su vehículo");
+        Toast.makeText(getApplicationContext(), "placa:"+resultado, Toast.LENGTH_SHORT).show();
         resultado=resultado&&revisarCampo(marca,45,"Ingrese la marca de su vehículo");
         resultado=resultado&&revisarCampo(modelo,45,"Ingrese la modelo de su vehículo");
         resultado=resultado&&reviasarNumeroPasajeros(numeroPasajeros);
@@ -89,7 +91,6 @@ public class AgregarAuto extends AppCompatActivity
             {
                 resultado = false;
             }
-
         }
         else
         {
@@ -98,10 +99,10 @@ public class AgregarAuto extends AppCompatActivity
         }
         return resultado;
     }
-    private boolean reviasarNumeroPasajeros (int numeroPasajeros)
+    private boolean reviasarNumeroPasajeros (String numeroPasajeros)
     {
         boolean resultado;
-        if(numeroPasajeros>=2)
+        if(numeroPasajeros.length()>0)
         {
             resultado=true;
         }
@@ -123,7 +124,7 @@ public class AgregarAuto extends AppCompatActivity
                 postDataParams.put("marca", marcaET.getText().toString());
                 postDataParams.put("modelo", modeloET.getText().toString());
                 postDataParams.put("numero", numeroPasajerosET.getText().toString());
-                return RequestHandler.sendPost(Constante.url+"Aun No Hay",postDataParams);
+                return RequestHandler.sendPost(Constante.url+"Vehiculos/Agregar",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());

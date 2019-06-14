@@ -42,4 +42,5 @@
     <string name="modeloAuto">Modelo:</string>
     <string name="numeroPasajeros">Número de pasajeros:</string>
     <string name="guardarVehiculo">Guardar Vehículo</string>
+    <string name="opcionesAdm">Opciones Avanzadas Administrador</string>
 </resources>

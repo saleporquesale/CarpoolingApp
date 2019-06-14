@@ -138,7 +138,5 @@ public class Frag2 extends Fragment {
                 Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
             }
         }
-
-
     }
 }

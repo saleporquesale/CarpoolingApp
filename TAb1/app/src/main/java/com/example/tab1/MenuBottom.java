@@ -145,13 +145,15 @@ public class MenuBottom extends AppCompatActivity {
     public static ArrayList<String> getSearchAmigosTotalesAL(String buscado)
     {
         amigosTotalesAL=getAmigosTotalesAL();
-        if(amigosTotalesAL.contains(buscado))
+        ArrayList<String> buscados=new ArrayList<>();;
+        for (int i=0;i<amigosTotalesAL.size();i++)
         {
-            String aux=amigosTotalesAL.get(amigosTotalesAL.indexOf(buscado));
-            amigosTotalesAL.set(amigosTotalesAL.indexOf(buscado),amigosTotalesAL.get(0));
-            amigosTotalesAL.set(0,aux);
+            if(amigosTotalesAL.get(i).toLowerCase().trim().contains(buscado.toLowerCase().trim()))
+            {
+                buscados.add(amigosTotalesAL.get(i));
+            }
         }
-        return amigosTotalesAL;
+        return buscados;
     }
     public static String getPositionAmigosTotalesAL(int position)
     {
