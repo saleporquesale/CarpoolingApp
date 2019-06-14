@@ -24,7 +24,9 @@ public class ConexionBase {
     private ConexionBase() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            _Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "proyecto");
+            _Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/"
+                    + "mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&"
+                    + "useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "proyecto");
         } catch (SQLException ex) {
             try {
                 throw new SQLException(ex);
@@ -86,5 +88,14 @@ public class ConexionBase {
         }
     }
     
+    public void guardar(int pId, String pKey, String pValue){
+        try {
+            PreparedStatement consulta;
+            consulta = this._Conexion.prepareStatement("");
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

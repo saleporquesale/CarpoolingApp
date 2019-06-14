@@ -7,8 +7,11 @@ package conexiones.Http;
 
 import Auxiliares.Constantes;
 import com.sun.net.httpserver.HttpServer;
+import conexiones.Http.peticiones.GuardarPerfilHandler;
 import conexiones.Http.peticiones.LoginHandler;
 import conexiones.Http.peticiones.PerfilAmigosHandler;
+import conexiones.Http.peticiones.PerfilHandler;
+import conexiones.Http.peticiones.PerfilVehiculosHandler;
 import conexiones.Http.peticiones.SignUpHandler;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -16,24 +19,23 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author jeja1
  */
 public class ServidorHTTP {
-    
+
     private static ServidorHTTP _Instancia;
     private HttpServer _Servidor;
-    
-    private ServidorHTTP(){
+
+    private ServidorHTTP() {
         try {
             InetAddress direcionIP = InetAddress.getByName(Constantes.Constante_IP);
-            this._Servidor = HttpServer.create(new InetSocketAddress(direcionIP,Constantes.Constante_Puerto),0);
-            System.out.println("server started at " + Constantes.Constante_Puerto+ " at " + 
-                    this._Servidor.getAddress().getHostString());
-            this._Servidor.createContext("/", new LoginHandler());
-            this._Servidor.createContext("/SignUp", new SignUpHandler());
-            this._Servidor.createContext("/Perfil/Amigos", new PerfilAmigosHandler());
+            this._Servidor = HttpServer.create(new InetSocketAddress(direcionIP, Constantes.Constante_Puerto), 0);
+            System.out.println("server started at " + Constantes.Constante_Puerto + " at "
+                    + this._Servidor.getAddress().getHostString());
+            this.difineHandlers();
             this._Servidor.setExecutor(null);
         } catch (UnknownHostException ex) {
             Logger.getLogger(ServidorHTTP.class.getName()).log(Level.SEVERE, null, ex);
@@ -41,15 +43,24 @@ public class ServidorHTTP {
             Logger.getLogger(ServidorHTTP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public static ServidorHTTP getInstancia(){
-        if(_Instancia==null){
+
+    public static ServidorHTTP getInstancia() {
+        if (_Instancia == null) {
             _Instancia = new ServidorHTTP();
         }
         return _Instancia;
     }
-    
-    public void iniciar(){
+
+    public void iniciar() {
         _Servidor.start();
+    }
+
+    private void difineHandlers() {
+        this._Servidor.createContext("/", new LoginHandler());
+        this._Servidor.createContext("/SignUp", new SignUpHandler());
+        this._Servidor.createContext("/Perfil/Amigos", new PerfilAmigosHandler());
+        this._Servidor.createContext("/Perfil/Vehiculos", new PerfilVehiculosHandler());
+        this._Servidor.createContext("/Perfil", new PerfilHandler());
+        this._Servidor.createContext("/Perfil/Guardar", new GuardarPerfilHandler());
     }
 }

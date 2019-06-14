@@ -25,7 +25,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class PerfilHandler implements HttpHandler {
+public class GuardarPerfilHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -38,15 +38,18 @@ public class PerfilHandler implements HttpHandler {
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
-                ConexionBase.getInstancia().perfil(Integer.parseInt(JSONIngreso.
-                        get("id").toString()));
+                ConexionBase.getInstancia().perfil(Integer.
+                        parseInt(JSONIngreso.get("id").toString()));
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
                 os.write(Constantes.Constante_OK.getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(PerfilHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GuardarPerfilHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
+    // Definir el query para enviar el guardado en uno mismo query
+    //Dos metodos que definan los valores cambiantes
 }
