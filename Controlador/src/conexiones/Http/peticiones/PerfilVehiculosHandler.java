@@ -38,10 +38,6 @@ public class PerfilVehiculosHandler implements HttpHandler {
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
-                FileWriter archibo = new FileWriter(Constantes.Constantes_ArchivoDATIC,true);
-                PrintWriter esctritura = new PrintWriter(archibo);
-                esctritura.println(JSONIngreso.toJSONString());
-                esctritura.close();
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
                 os.write(Constantes.Constante_OK.getBytes());

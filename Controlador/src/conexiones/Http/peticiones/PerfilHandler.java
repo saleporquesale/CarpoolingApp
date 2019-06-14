@@ -25,7 +25,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class SignUpHandler implements HttpHandler {
+public class PerfilHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -38,30 +38,13 @@ public class SignUpHandler implements HttpHandler {
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
-                this.ConexionADATIC(JSONIngreso);
-                ConexionBase.getInstancia().signUp(JSONIngreso.get("nombre").toString(),
-                        Integer.parseInt(JSONIngreso.get("id").toString()),
-                        JSONIngreso.get("telefono").toString(),
-                        JSONIngreso.get("correo").toString());
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
                 os.write(Constantes.Constante_OK.getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(SignUpHandler.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(SignUpHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PerfilHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
-    private void ConexionADATIC(JSONObject pJson) throws IOException {
-        JSONObject JSONdatic = new JSONObject();
-        JSONdatic.put("id", pJson.get("id"));
-        FileWriter archibo = new FileWriter(Constantes.Constantes_ArchivoDATIC, true);
-        PrintWriter esctritura = new PrintWriter(archibo);
-        esctritura.println(JSONdatic.toJSONString());
-        esctritura.close();
-    }
-
 }

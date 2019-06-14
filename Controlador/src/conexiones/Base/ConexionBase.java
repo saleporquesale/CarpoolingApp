@@ -19,12 +19,12 @@ import java.util.logging.Logger;
 public class ConexionBase {
 
     private static ConexionBase _Instancia;
-    private Connection _Conecion;
+    private Connection _Conexion;
 
     private ConexionBase() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            _Conecion = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "proyecto");
+            _Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "proyecto");
         } catch (SQLException ex) {
             try {
                 throw new SQLException(ex);
@@ -43,16 +43,48 @@ public class ConexionBase {
         return _Instancia;
     }
 
-    public boolean signUp(String pNombre, int pId, String pTelefono, String pCorreo) throws SQLException {
+    public void signUp(String pNombre, int pId, String pTelefono, String pCorreo) throws SQLException {
         try {
             PreparedStatement consulta;
             //Query del structed procedure para la creacion del usuario
-            consulta = this._Conecion.prepareStatement("INSERT INTO prueba (Mensaje) VALUES(?)");
+            consulta = this._Conexion.prepareStatement("INSERT INTO prueba (Mensaje) VALUES(?)");
             consulta.executeUpdate();
         } catch (SQLException ex) {
             throw new SQLException(ex);
         }
-        return true;
     }
-
+    
+    public void amigos(int pId){
+        try {
+            PreparedStatement consulta;
+            //Query para obtener la lista de los amigos
+            consulta = this._Conexion.prepareStatement("");
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void vehiculos(int pId){
+        try {
+            PreparedStatement consulta;
+            //Query para la busqueda de la lista de vehiculos
+            consulta = this._Conexion.prepareStatement("");
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void perfil(int pId){
+        try {
+            PreparedStatement consulta;
+            consulta = this._Conexion.prepareStatement("");
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 }
