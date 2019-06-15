@@ -67,7 +67,6 @@ public class SignUpHandler implements HttpHandler {
         PrintWriter esctritura = new PrintWriter(archibo);
         esctritura.println(JSONdatic.toJSONString());
         esctritura.close();
-                System.out.println("hola");
         return this.definirTipo(Integer.parseInt(pJson.get("id").toString()));
     }
 

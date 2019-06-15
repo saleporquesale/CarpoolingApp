@@ -13,21 +13,45 @@ import java.util.LinkedList;
  */
 public class Usuario {
     private String _Nombre;
-    private String _Apellidos;
     private int _Identificacion;
     private int _Telefono;
     private String _Correo;
     private int _TipoDeUsuario;
     private int _TipoDeCategoria;
 
-    public Usuario(String pNombre, String pApellidos, int pIdentificacion,
+    public Usuario(String pNombre, int pIdentificacion,
             int pTelefono, String pCorreo) {
         this._Nombre = pNombre;
-        this._Apellidos = pApellidos;
         this._Identificacion = pIdentificacion;
         this._Telefono = pTelefono;
         this._Correo = pCorreo;
     }
+
+    public String getNombre() {
+        return this._Nombre;
+    }
+
+    public int getIdentificacion() {
+        return this._Identificacion;
+    }
+
+    public int getTelefono() {
+        return this._Telefono;
+    }
+
+    public String getCorreo() {
+        return this._Correo;
+    }
+
+    public int getTipoDeUsuario() {
+        return this._TipoDeUsuario;
+    }
+
+    public int getTipoDeCategoria() {
+        return this._TipoDeCategoria;
+    }
+    
+    
     
     
 }

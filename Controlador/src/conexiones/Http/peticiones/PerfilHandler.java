@@ -38,11 +38,11 @@ public class PerfilHandler implements HttpHandler {
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
-                ConexionBase.getInstancia().perfil(Integer.parseInt(JSONIngreso.
-                        get("id").toString()));
+                JSONObject JSONSalida = ConexionBase.getInstancia().perfil(Integer.
+                        parseInt(JSONIngreso.get("id").toString()));
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
-                os.write(Constantes.Constante_OK.getBytes());
+                os.write(JSONSalida.toJSONString().getBytes());
                 os.close();
             } catch (ParseException ex) {
                 Logger.getLogger(PerfilHandler.class.getName()).log(Level.SEVERE, null, ex);
