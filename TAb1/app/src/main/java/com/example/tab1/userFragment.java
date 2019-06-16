@@ -1,20 +1,25 @@
 package com.example.tab1;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -24,9 +29,11 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
@@ -45,6 +52,7 @@ public class userFragment extends Fragment {
     private Button generarQRBtn;
     private ImageButton agregarAutoBtn;
     private ImageView codigoQR;
+    private ArrayList<String> autosAL=new ArrayList<>();
 
     public userFragment()
     {
@@ -65,13 +73,16 @@ public class userFragment extends Fragment {
         generarQRBtn=vista.findViewById(R.id.qrCodeBtn);
         agregarAutoBtn=vista.findViewById(R.id.addCarrosUBtn);
         codigoQR=vista.findViewById(R.id.image);
+        autosLV=vista.findViewById(R.id.CarrosULV);
+        autosAL=getAutosArray();
+        Toast.makeText(getContext(),autosAL.toString(),Toast.LENGTH_LONG).show();
         //Solicitando datos de usuario
         RequestAsyncDatos datosUsuario= (RequestAsyncDatos) new RequestAsyncDatos().execute();
         JSONParser parser = new JSONParser();
-        JSONObject resultadoPost=new JSONObject();
+        org.json.simple.JSONObject resultadoPost=new org.json.simple.JSONObject();
         try
         {
-            resultadoPost = (JSONObject) parser.parse(datosUsuario.get());
+            resultadoPost = (org.json.simple.JSONObject) parser.parse(datosUsuario.get());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -81,21 +92,9 @@ public class userFragment extends Fragment {
         }
         //Escribiendo los datos obtenidos
         idET.setText(MenuBottom.getIdUser());
-        try {
-            nombreET.setText(resultadoPost.getString("nombre"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            telefonoET.setText(resultadoPost.getString("telefono"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            correoInstitucionalET.setText(resultadoPost.getString("correo"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        nombreET.setText((CharSequence) resultadoPost.get("nombre"));
+        telefonoET.setText((CharSequence) resultadoPost.get("telefono"));
+        correoInstitucionalET.setText((CharSequence) resultadoPost.get("correo"));
         //Agregar autos
         agregarAutoBtn.setOnClickListener(new View.OnClickListener()
         {
@@ -143,7 +142,67 @@ public class userFragment extends Fragment {
                 }
             }
         });
+        //LV vehiculos
+        autosAL=getAutosArray();
+        Toast.makeText(getContext(),autosAL.toString(),Toast.LENGTH_LONG).show();
+        final ArrayAdapter arrayAdapterAutos=new ArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_1, autosAL);
+        autosLV.setAdapter(arrayAdapterAutos);
+        autosLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
+                dialogo1.setTitle("Eliminar vehiculo");
+                dialogo1.setMessage("¿ Desea eliminar el vehiculo seleccionado ?");
+                dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id)
+                    {
+
+                    }
+                });
+                dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        Toast.makeText(getContext(),"bueno",Toast.LENGTH_LONG).show();
+                    }
+                });
+                dialogo1.show();
+                autosLV.setAdapter(arrayAdapterAutos);
+            }
+        });
         return vista;
+
+    }
+    //Array autos
+
+    public ArrayList<String> getAutosArray()
+    {
+        RequestAsyncAuto datosUsuario= (RequestAsyncAuto) new RequestAsyncAuto().execute();
+        JSONParser parser = new JSONParser();
+        org.json.simple.JSONArray resultadoPost=new org.json.simple.JSONArray();
+        try
+        {
+            resultadoPost = (org.json.simple.JSONArray) parser.parse(datosUsuario.get());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for(int i=0;i<resultadoPost.size();i++)
+        {
+            org.json.simple.JSONObject auto= (org.json.simple.JSONObject) resultadoPost.get(i);
+            String modelo="";
+            long numero;
+            String placa;
+            modelo= (String) auto.get("modelo");
+            numero= (long) auto.get("numero");
+            placa= (String) auto.get("placa");
+            autosAL.add("Modelo: "+modelo+"\n Asientos:"+numero+"\n Placa: "+placa);
+        }
+        return autosAL;
     }
     public class RequestAsyncActualizarDatos extends AsyncTask<String,String,String>
     {
@@ -178,6 +237,28 @@ public class userFragment extends Fragment {
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("id", MenuBottom.getIdUser());
                 return RequestHandler.sendPost(Constante.url+"Perfil",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null)
+            {
+                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public class RequestAsyncAuto extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("id", MenuBottom.getIdUser());
+                return RequestHandler.sendPost(Constante.url+"Perfil/Vehiculos",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());

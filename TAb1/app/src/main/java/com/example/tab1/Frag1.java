@@ -63,6 +63,7 @@ public class Frag1 extends Fragment {
                             Toast.makeText(getContext(),"Iniciando",Toast.LENGTH_SHORT).show();
                             Intent irMenu= new Intent(getActivity(),MenuBottom.class);
                             irMenu.putExtra("idKey",id.getText().toString());
+                            irMenu.putExtra("agregado","");
                             startActivity(irMenu);
                         }
                 }

@@ -124,7 +124,7 @@ public class AgregarAuto extends AppCompatActivity
                 postDataParams.put("marca", marcaET.getText().toString());
                 postDataParams.put("modelo", modeloET.getText().toString());
                 postDataParams.put("numero", numeroPasajerosET.getText().toString());
-                return RequestHandler.sendPost(Constante.url+"Vehiculos/Agregar",postDataParams);
+                return RequestHandler.sendPost(Constante.url+"Perfil/Vehiculos/Agregar",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());

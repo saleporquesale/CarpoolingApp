@@ -49,6 +49,7 @@ public class Frag2 extends Fragment {
                 resultado=comprobarEmail()&&resultado;
                 resultado=comprobarId()&&resultado;
                 resultado=comprobarTelefono()&&resultado;
+                Toast.makeText(getContext(),"resultado:"+resultado,Toast.LENGTH_LONG).show();
                 if(resultado)
                 {
                     RequestAsync post2= (RequestAsync) new RequestAsync().execute();
@@ -87,7 +88,7 @@ public class Frag2 extends Fragment {
     private boolean comprobarNombre()
     {
         String test=nombre.getText().toString();
-        boolean resultado=test.matches("\\w+");
+        boolean resultado=test.length()>0;
         if(!resultado)
         {
             nombre.setHint("Introduzca su nombre");
@@ -97,7 +98,7 @@ public class Frag2 extends Fragment {
     private boolean comprobarId()
     {
         String test=id.getText().toString();
-        boolean resultado=test.matches("\\w+");
+        boolean resultado=test.length()>0;
         if(!resultado)
         {
             id.setHint("Introduzca su id");
@@ -107,7 +108,7 @@ public class Frag2 extends Fragment {
     private boolean comprobarTelefono()
     {
         String test=telefono.getText().toString();
-        boolean resultado=test.matches("\\w+");
+        boolean resultado=test.length()>0;
         if(!resultado)
         {
             telefono.setHint("Introduzca su teléfono");

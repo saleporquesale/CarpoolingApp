@@ -6,56 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".friendsFragment">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <EditText
+            android:id="@+id/amigosET"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/buscarNewAmigoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/buscarAmigosBtn"
+            android:backgroundTint="@color/colorAccent"
+            android:cropToPadding="true"
+            android:src="@drawable/ic_person_add_black_24dp" />
+
+        <ListView
+            android:id="@+id/amigosLV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/amigosET"
+            android:layout_marginTop="10dp" />
 
-            <EditText
-                android:id="@+id/amigosET"
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawableStart="@drawable/ic_search_black_24dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textSize="14sp" />
+        <ImageButton
+            android:id="@+id/buscarAmigosBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/amigosET"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_search_black_24dp" />
 
-            <ListView
-                android:id="@+id/amigosLV"
-                android:layout_width="395dp"
-                android:layout_height="657dp"
-                android:layout_below="@+id/amigosET"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp" />
-
-            <Button
-                android:id="@+id/buscarAmigosBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/amigosET"
-                android:text="@string/buscar"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/buscarNewAmigoBtn"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/buscarAmigosBtn"
-                android:drawableStart="@drawable/ic_person_add_black_24dp" />
-
-        </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
 
 </FrameLayout>
