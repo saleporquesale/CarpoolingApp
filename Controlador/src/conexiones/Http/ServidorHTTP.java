@@ -9,7 +9,9 @@ import Auxiliares.Constantes;
 import com.sun.net.httpserver.HttpServer;
 import conexiones.Http.peticiones.GuardarPerfilHandler;
 import conexiones.Http.peticiones.LoginHandler;
+import conexiones.Http.peticiones.PerfilAgregarVehiculosHandler;
 import conexiones.Http.peticiones.PerfilAmigosHandler;
+import conexiones.Http.peticiones.PerfilBuscarAmigosHandler;
 import conexiones.Http.peticiones.PerfilHandler;
 import conexiones.Http.peticiones.PerfilVehiculosHandler;
 import conexiones.Http.peticiones.SignUpHandler;
@@ -62,5 +64,7 @@ public class ServidorHTTP {
         this._Servidor.createContext("/Perfil/Vehiculos", new PerfilVehiculosHandler());
         this._Servidor.createContext("/Perfil", new PerfilHandler());
         this._Servidor.createContext("/Perfil/Guardar", new GuardarPerfilHandler());
+        this._Servidor.createContext("/Perfil/Vehiculos/Agregar", new PerfilAgregarVehiculosHandler());
+        this._Servidor.createContext("/Perfil/Amigos/Buscar", new PerfilBuscarAmigosHandler());
     }
 }

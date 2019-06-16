@@ -25,7 +25,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class PerfilAmigosHandler implements HttpHandler {
+public class PerfilBuscarAmigosHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -38,14 +38,14 @@ public class PerfilAmigosHandler implements HttpHandler {
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
-                ConexionBase.getInstancia().amigos(Integer.parseInt(
-                        JSONIngreso.get("id").toString()));
+                ConexionBase.getInstancia().posiblesAmigos(JSONIngreso.
+                        get("nombre").toString());
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
                 os.write(Constantes.Constante_OK.getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(PerfilAmigosHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PerfilBuscarAmigosHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -12,7 +12,7 @@ package Auxiliares;
  */
 public class Constantes {
     public static final int Constante_Puerto = 9090;
-    public static final String Constante_IP = "172.18.34.148";
+    public static final String Constante_IP = "172.19.50.45";
     public static final String Constante_OK = "OK";
     public static final String Constante_NoExiste = "Error Usuario";
     public static final String Constantes_ArchivoDATIC = "src/DATIC/DATIC.txt";
