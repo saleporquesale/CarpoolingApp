@@ -1,31 +1,29 @@
 package com.example.tab1;
 
+        import android.content.DialogInterface;
+        import android.content.Intent;
+        import android.os.AsyncTask;
+        import android.os.Bundle;
+        import android.support.v4.app.Fragment;
+        import android.support.v7.app.AlertDialog;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.ListView;
+        import android.widget.Spinner;
+        import android.widget.Toast;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
+        import org.json.JSONObject;
+        import org.json.simple.JSONArray;
+        import org.json.simple.parser.JSONParser;
+        import org.json.simple.parser.ParseException;
 
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
-
+        import java.util.ArrayList;
+        import java.util.Arrays;
+        import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,8 +40,11 @@ public class viajesFragment extends Fragment
     private int pasajerosMaximo=5;
     private static ArrayList<String> autosArray=new ArrayList<>();
     private static ArrayList<String> autosCapacidadAL=new ArrayList<>();
+    private static ArrayList<String> autosPlacadAL=new ArrayList<>();
     private static ArrayList<String> amigosAgregadosALID =new ArrayList<>();
     private static ArrayList<String> amigosAgregadosAL =new ArrayList<>();
+    private String placa;
+
     public viajesFragment()
     {
         // Required empty public constructor
@@ -107,10 +108,10 @@ public class viajesFragment extends Fragment
         });
         //Cargar autos
         autosArray=getAutosArray();
-        if(autosCapacidadAL.size()>0)
-        {
-
-        }
+//        if(autosCapacidadAL.size()>0)
+//        {
+//
+//        }
         //Selección del auto
         autosDisponibles=vista.findViewById(R.id.vehiculosSpiner);
         final ArrayAdapter arrayAdapterAutos=new ArrayAdapter(getContext(),
@@ -121,12 +122,13 @@ public class viajesFragment extends Fragment
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 pasajerosMaximo=Integer.parseInt(autosCapacidadAL.get(position));
+                placa=autosPlacadAL.get(position);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
             }
         });
-        //Crear Viaje
+        //Crear Viaje btn
         crearViaje.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -134,6 +136,10 @@ public class viajesFragment extends Fragment
             {
                 if((100/pasajerosMaximo)*(amigosAgregadosALID.size()+1)>70)
                 {
+                    RequestAsyncCrearViaje datosUsuario= (RequestAsyncCrearViaje)
+                            new RequestAsyncCrearViaje().execute();
+                    JSONParser parser = new JSONParser();
+                    JSONArray resultadoPost=new JSONArray();
                     Toast.makeText(getContext(),"Creando viaje",Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -144,6 +150,7 @@ public class viajesFragment extends Fragment
                 }
             }
         });
+
         return vista;
     }
     //Agregando a alguien a la lista del viaje en el caso de que exista algun campo para el
@@ -155,9 +162,9 @@ public class viajesFragment extends Fragment
             {
                 if(!agregadosWithId.contains(agregado))
                 {
-                    agregadosWithId.add(agregado);
                     ArrayList<String> datos=new ArrayList<>(Arrays.asList(agregado.split(",")));
                     amigosAgregadosAL.add(datos.get(0)+"\nTelefono: "+datos.get(2));
+                    agregadosWithId.add(datos.get(1));
                 }
             }
         }
@@ -168,6 +175,7 @@ public class viajesFragment extends Fragment
     {
         autosArray.clear();
         autosCapacidadAL.clear();
+        autosPlacadAL.clear();
         RequestAsyncAuto datosUsuario= (RequestAsyncAuto) new RequestAsyncAuto().execute();
         JSONParser parser = new JSONParser();
         JSONArray resultadoPost=new JSONArray();
@@ -191,6 +199,7 @@ public class viajesFragment extends Fragment
             numero= (long) auto.get("numero");
             placa= (String) auto.get("placa");
             autosCapacidadAL.add(numero+"");
+            autosPlacadAL.add(placa);
             autosArray.add("Modelo: "+modelo+" Asientos: "+numero+"\n"+" Placa: "+placa);
         }
         return autosArray;
@@ -224,8 +233,13 @@ public class viajesFragment extends Fragment
             try {
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("id", MenuBottom.getIdUser());
-
-                return RequestHandler.sendPost(Constante.url+"Perfil/Vehiculos",postDataParams);
+                postDataParams.put("numero", amigosAgregadosAL.size());
+                postDataParams.put("placa", placa);
+                for (int i=0;i<amigosAgregadosALID.size();i++)
+                {
+                    postDataParams.put("idAmigo"+i, amigosAgregadosALID.get(i));
+                }
+                return RequestHandler.sendPost(Constante.url+"Viaje/Crear",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());
@@ -240,5 +254,4 @@ public class viajesFragment extends Fragment
             }
         }
     }
-
 }

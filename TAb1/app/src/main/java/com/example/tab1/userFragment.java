@@ -178,6 +178,7 @@ public class userFragment extends Fragment {
 
     public ArrayList<String> getAutosArray()
     {
+        autosAL.clear();
         RequestAsyncAuto datosUsuario= (RequestAsyncAuto) new RequestAsyncAuto().execute();
         JSONParser parser = new JSONParser();
         org.json.simple.JSONArray resultadoPost=new org.json.simple.JSONArray();

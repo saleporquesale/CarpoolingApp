@@ -43,4 +43,6 @@
     <string name="numeroPasajeros">Número de pasajeros:</string>
     <string name="guardarVehiculo">Guardar Vehículo</string>
     <string name="opcionesAdm">Opciones Avanzadas Administrador</string>
+    <string name="facebook_app_id">1397985257022480</string>
+    <string name="fb_login_protocol_scheme">fb1397985257022480</string>
 </resources>

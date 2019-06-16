@@ -89,7 +89,24 @@ public class notificacionesFragment extends Fragment {
                 }
                 else if (tipo==2)
                 {
-
+                    AlertDialog.Builder dialogo2 = new AlertDialog.Builder(getContext());
+                    dialogo2.setTitle("Solicitud de viaje");
+                    dialogo2.setMessage("¿ Desea aceptar el viaje ?");
+                    dialogo2.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id)
+                        {
+                            RequestAsyncAceptarViaje datosUsuario= (RequestAsyncAceptarViaje)
+                                    new RequestAsyncAceptarViaje().execute();
+                            JSONParser parser = new JSONParser();
+                            JSONArray resultadoPost=new JSONArray();
+                        }
+                    });
+                    dialogo2.setNegativeButton("Negar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            Toast.makeText(getContext(),"bueno",Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    dialogo2.show();
                 }
                 else if (tipo==3)
                 {
@@ -179,26 +196,27 @@ public class notificacionesFragment extends Fragment {
             }
         }
     }
-//    public class RequestAsyncRecibirAceptarAmigo extends AsyncTask<String,String,String>
-//    {
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            try {
-//                JSONObject postDataParams = new JSONObject();
-//                postDataParams.put("id", MenuBottom.getIdUser());
-//                return RequestHandler.sendPost(Constante.url+"Notificaciones",postDataParams); /////Sin definir
-//            }
-//            catch(Exception e){
-//                return new String("Exception: " + e.getMessage());
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            if(s!=null)
-//            {
-//                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
+    public class RequestAsyncAceptarViaje extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("id", MenuBottom.getIdUser());
+                postDataParams.put("idNotificacion", idNotificacion);
+                return RequestHandler.sendPost(Constante.url+"Viaje/Aceptar",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null)
+            {
+                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
