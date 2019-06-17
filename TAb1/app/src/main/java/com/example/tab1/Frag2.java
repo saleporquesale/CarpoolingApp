@@ -120,11 +120,12 @@ public class Frag2 extends Fragment {
     }
 
 
-    private boolean comprobarEmail()
+    public boolean comprobarEmail()
     {
         boolean resultado=false;
         String test=correo.getText().toString();
-        resultado=test.matches("\\w+@estudiante.com");
+        //resultado=test.matches("\\w+@xtec.ac.cr");
+        resultado=ComprobarDatos.isValidEmail(test);
         if(!resultado)
         {
             correo.setText("");

@@ -58,4 +58,5 @@
     <string name="m">Mostrar Tabla Puntos Por Categoria</string>
     <string name="a">Mostrar tabla lista de viajes</string>
     <string name="df">Puntos Totales:</string>
+    <string name="asdf">Deshabilitar</string>
 </resources>

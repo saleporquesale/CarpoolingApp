@@ -56,6 +56,7 @@ public class userFragment extends Fragment {
     private ArrayList<String> autosPlacaAL=new ArrayList<>();
     private Button opcionesAdm;
     private String placaAutoDeshabilitado;
+    private Button deshabilitarBtn;
 
     public userFragment()
     {
@@ -77,6 +78,7 @@ public class userFragment extends Fragment {
         agregarAutoBtn=vista.findViewById(R.id.addCarrosUBtn);
         codigoQR=vista.findViewById(R.id.image);
         autosLV=vista.findViewById(R.id.CarrosULV);
+        deshabilitarBtn=vista.findViewById(R.id.deshabilitarBtn);
         autosAL=getAutosArray();
         opcionesAdm=vista.findViewById(R.id.opcionesAdmBtn);
 
@@ -144,6 +146,20 @@ public class userFragment extends Fragment {
                 }
                 catch (WriterException e){
                     e.printStackTrace();
+                }
+            }
+        });
+        // Deshabilitar
+        deshabilitarBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                RequestAsyncDeshabilitar deshabilitar= (RequestAsyncDeshabilitar) new RequestAsyncDeshabilitar().execute();
+                try {
+                    super.finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
                 }
             }
         });
@@ -341,6 +357,27 @@ public class userFragment extends Fragment {
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("placa", placaAutoDeshabilitado);
                 return RequestHandler.sendPost(Constante.url+"Perfil/Vehiculos/Eliminar",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null){
+                //Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public class RequestAsyncDeshabilitar extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("id", MenuBottom.getIdUser());
+                return RequestHandler.sendPost(Constante.url+"Perfil/Deshabilitar",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());

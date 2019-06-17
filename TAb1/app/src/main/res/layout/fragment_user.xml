@@ -224,6 +224,20 @@
                 android:text="@string/opcionesAdm"
                 android:textColor="#F9FBFD" />
 
+            <Button
+                android:id="@+id/deshabilitarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/CarrosULV"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toStartOf="@+id/guardarPerfilBtn"
+                android:text="@string/asdf"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="#F9FBFD"/>
+
+
         </RelativeLayout>
     </ScrollView>
 
