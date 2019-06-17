@@ -22,9 +22,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="100dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="@string/iniciarSesionBtn"
-                android:textColor="@color/colorAccent"
+                android:textColor="#F9FBFD"
                 android:textSize="14sp" />
 
             <EditText

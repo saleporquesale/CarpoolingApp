@@ -38,6 +38,7 @@ public class notificacionesFragment extends Fragment {
     private ArrayList<String> notificacionesArray=new ArrayList<>();
     private ArrayList<String> notificacionesALCompleto=new ArrayList<>();
     private String idNotificacion="-1";
+    String idViaje = "";
     public notificacionesFragment() {
         // Required empty public constructor
     }
@@ -65,7 +66,7 @@ public class notificacionesFragment extends Fragment {
                 //Obteniendo datos
                 int tipo=Integer.parseInt(datosNotificacion.get(2));
                 idNotificacion=datosNotificacion.get(1);
-                if(tipo==0)
+                if(tipo==0)//Solicitud de amistad
                 {
                     AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                     dialogo1.setTitle("Solicitud de amistad");
@@ -87,28 +88,54 @@ public class notificacionesFragment extends Fragment {
                     dialogo1.show();
 
                 }
-                else if (tipo==2)
+                else if (tipo==2)//Solicitud de viaje
                 {
                     AlertDialog.Builder dialogo2 = new AlertDialog.Builder(getContext());
                     dialogo2.setTitle("Solicitud de viaje");
                     dialogo2.setMessage("¿ Desea aceptar el viaje ?");
-                    dialogo2.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    dialogo2.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                    {
                         public void onClick(DialogInterface dialogo1, int id)
                         {
                             RequestAsyncAceptarViaje datosUsuario= (RequestAsyncAceptarViaje)
                                     new RequestAsyncAceptarViaje().execute();
-                            JSONParser parser = new JSONParser();
-                            JSONArray resultadoPost=new JSONArray();
                         }
                     });
-                    dialogo2.setNegativeButton("Negar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialogo1, int id) {
-                            Toast.makeText(getContext(),"bueno",Toast.LENGTH_LONG).show();
+                    dialogo2.setNegativeButton("Negar", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialogo1, int id)
+                        {
+                            RequestAsyncRechazarViaje datosUsuario=(RequestAsyncRechazarViaje)
+                                    new RequestAsyncRechazarViaje().execute();
                         }
                     });
                     dialogo2.show();
                 }
-                else if (tipo==3)
+                else if (tipo==8)//Iniciar el viaje
+                {
+                    AlertDialog.Builder dialogo3 = new AlertDialog.Builder(getContext());
+                    dialogo3.setTitle("Iniciar viaje");
+                    dialogo3.setMessage("¿ Desea iniciar el viaje ?");
+                    dialogo3.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialogo1, int id)
+                        {
+                            RequestAsyncIniciarViaje datosUsuario= (RequestAsyncIniciarViaje)
+                                    new RequestAsyncIniciarViaje().execute();
+                            JSONParser parser = new JSONParser();
+                            JSONArray resultadoPost=new JSONArray();
+                        }
+                    });
+                    dialogo3.setNegativeButton("Negar", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialogo1, int id)
+                        {
+                            Toast.makeText(getContext(),"bueno",Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    dialogo3.show();
+                }
+                else if (tipo==9)
                 {
 
                 }
@@ -142,11 +169,16 @@ public class notificacionesFragment extends Fragment {
             String notificacion="";
             long idNotificacion;
             long idTipo;
-            notificacion= (String) amigo.get("mensaje");
-            idNotificacion= (long) amigo.get("id");
             idTipo= (long) amigo.get("tipo");
-            notificacionesArray.add(notificacion);
-            notificacionesALCompleto.add(notificacion+","+idNotificacion+","+idTipo);
+            notificacion= (String) amigo.get("mensaje");
+            if(idTipo==2||idTipo==8)
+            {
+                idViaje = notificacion.substring(notificacion.lastIndexOf("#")+1);
+                notificacion = notificacion.substring(0,notificacion.lastIndexOf("#"));
+            }
+            idNotificacion= (long) amigo.get("id");
+            notificacionesArray.add(0,notificacion);
+            notificacionesALCompleto.add(0,notificacion+","+idNotificacion+","+idTipo);
         }
         return notificacionesArray;
     }
@@ -169,7 +201,7 @@ public class notificacionesFragment extends Fragment {
         protected void onPostExecute(String s) {
             if(s!=null)
             {
-                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -204,7 +236,56 @@ public class notificacionesFragment extends Fragment {
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("id", MenuBottom.getIdUser());
                 postDataParams.put("idNotificacion", idNotificacion);
+                postDataParams.put("idViaje", idViaje);
                 return RequestHandler.sendPost(Constante.url+"Viaje/Aceptar",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null)
+            {
+                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public class RequestAsyncRechazarViaje extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("id", MenuBottom.getIdUser());
+                postDataParams.put("idNotificacion", idNotificacion);
+                postDataParams.put("idViaje", idViaje);
+                return RequestHandler.sendPost(Constante.url+"Viaje/Rechazar",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null)
+            {
+                Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public class RequestAsyncIniciarViaje extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("id", MenuBottom.getIdUser());
+                postDataParams.put("idNotificacion", idNotificacion);
+                postDataParams.put("idViaje", idViaje);
+                return RequestHandler.sendPost(Constante.url+"Viaje/Iniciar",postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());

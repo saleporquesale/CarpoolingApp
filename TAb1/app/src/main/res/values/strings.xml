@@ -45,4 +45,17 @@
     <string name="opcionesAdm">Opciones Avanzadas Administrador</string>
     <string name="facebook_app_id">1397985257022480</string>
     <string name="fb_login_protocol_scheme">fb1397985257022480</string>
+    <string name="mostrarTabla">Mostrar tabla</string>
+    <string name="CantidadPuntos">Cantidad de puntos:</string>
+    <string name="ajuste">Ajustes</string>
+    <string name="categorias">Categorias</string>
+    <string name="correosParaReportes">Correos para reportes</string>
+    <string name="nuevoCorreoAdm">Ingresa un nuevo correo aquí</string>
+    <string name="nombreCategoria">Nombre de la Categoria:</string>
+    <string name="ptsMin">Puntos minimos</string>
+    <string name="minViajes">Minimo de viajes:</string>
+    <string name="agregarCategoria">Agregar Categoria</string>
+    <string name="m">Mostrar Tabla Puntos Por Categoria</string>
+    <string name="a">Mostrar tabla lista de viajes</string>
+    <string name="df">Puntos Totales:</string>
 </resources>

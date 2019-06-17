@@ -53,6 +53,9 @@ public class userFragment extends Fragment {
     private ImageButton agregarAutoBtn;
     private ImageView codigoQR;
     private ArrayList<String> autosAL=new ArrayList<>();
+    private ArrayList<String> autosPlacaAL=new ArrayList<>();
+    private Button opcionesAdm;
+    private String placaAutoDeshabilitado;
 
     public userFragment()
     {
@@ -75,6 +78,8 @@ public class userFragment extends Fragment {
         codigoQR=vista.findViewById(R.id.image);
         autosLV=vista.findViewById(R.id.CarrosULV);
         autosAL=getAutosArray();
+        opcionesAdm=vista.findViewById(R.id.opcionesAdmBtn);
+
         Toast.makeText(getContext(),autosAL.toString(),Toast.LENGTH_LONG).show();
         //Solicitando datos de usuario
         RequestAsyncDatos datosUsuario= (RequestAsyncDatos) new RequestAsyncDatos().execute();
@@ -151,7 +156,7 @@ public class userFragment extends Fragment {
         autosLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id)
             {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                 dialogo1.setTitle("Eliminar vehiculo");
@@ -159,7 +164,8 @@ public class userFragment extends Fragment {
                 dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id)
                     {
-
+                        placaAutoDeshabilitado=autosPlacaAL.get(position);
+                        RequestAsyncDeshabilitarAuto post= (RequestAsyncDeshabilitarAuto) new RequestAsyncDeshabilitarAuto().execute();
                     }
                 });
                 dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -171,6 +177,32 @@ public class userFragment extends Fragment {
                 autosLV.setAdapter(arrayAdapterAutos);
             }
         });
+        //Boton opciones administrador
+        opcionesAdm.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                RequestAsync post= (RequestAsync) new RequestAsync().execute();
+                String resultadoPost= null;
+                try {
+                    resultadoPost = post.get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(resultadoPost.contains("OK"))
+                {
+                    Intent irOpcionesAdm= new Intent(getActivity(),OpcionesAdministrador.class);
+                    startActivity(irOpcionesAdm);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Debes ser administrador para ver estas opciones",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         return vista;
 
     }
@@ -179,12 +211,13 @@ public class userFragment extends Fragment {
     public ArrayList<String> getAutosArray()
     {
         autosAL.clear();
+        autosPlacaAL.clear();
         RequestAsyncAuto datosUsuario= (RequestAsyncAuto) new RequestAsyncAuto().execute();
         JSONParser parser = new JSONParser();
-        org.json.simple.JSONArray resultadoPost=new org.json.simple.JSONArray();
+        JSONArray resultadoPost=new JSONArray();
         try
         {
-            resultadoPost = (org.json.simple.JSONArray) parser.parse(datosUsuario.get());
+            resultadoPost = (JSONArray) parser.parse(datosUsuario.get());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -201,6 +234,7 @@ public class userFragment extends Fragment {
             modelo= (String) auto.get("modelo");
             numero= (long) auto.get("numero");
             placa= (String) auto.get("placa");
+            autosPlacaAL.add(placa);
             autosAL.add("Modelo: "+modelo+"\n Asientos:"+numero+"\n Placa: "+placa);
         }
         return autosAL;
@@ -271,6 +305,52 @@ public class userFragment extends Fragment {
             if(s!=null)
             {
                 Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public class RequestAsync extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                //GET Request
+                //return RequestHandler.sendGet("http://172.18.150.4:9090/");
+
+                // POST Request
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("id", MenuBottom.getIdUser());
+                return RequestHandler.sendPost(Constante.url+"Administrador",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null){
+                //Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public class RequestAsyncDeshabilitarAuto extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("placa", placaAutoDeshabilitado);
+                return RequestHandler.sendPost(Constante.url+"Perfil/Vehiculos/Eliminar",postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null){
+                //Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
             }
         }
     }

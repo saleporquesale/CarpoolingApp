@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OpcionesAdministrador">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ajuste" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/categorias" />
+
+            <ListView
+                android:id="@+id/categoriasLV"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+            <ImageButton
+                android:id="@+id/agregarCategoriasBtn"
+                android:layout_width="41dp"
+                android:layout_height="34dp"
+                android:layout_gravity="right"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="#F9FBFD"
+                app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/correosParaReportes" />
+
+            <ListView
+                android:id="@+id/correosReportesLV"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" >
+
+            </ListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/nuevoCorreoET"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/nuevoCorreoAdm"
+                    android:inputType="textEmailAddress" />
+
+                <ImageButton
+                    android:id="@+id/agregarCorreoReporteBtn"
+                    android:layout_width="39dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:background="@drawable/roundedbutton"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="#F9FBFD"
+                    app:srcCompat="@drawable/ic_person_add_black_24dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

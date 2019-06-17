@@ -134,7 +134,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="-5dp"
                 android:layout_toEndOf="@+id/textView11"
-                android:background="#00FFFFFF"
+
+                android:background="@drawable/roundedbutton"
                 android:src="@drawable/ic_add_circle_outline_black_24dp"
                 android:tint="#03A9F4" />
 
@@ -155,7 +156,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
-                android:text="@string/guardarPerfil" />
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/guardarPerfil"
+                android:textColor="#F9FBFD" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -189,7 +193,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/crearQR" />
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/crearQR"
+                android:textColor="#F9FBFD" />
 
             <ImageView
                 android:id="@+id/image"
@@ -211,8 +218,11 @@
                 android:layout_marginStart="181dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
-                android:text="@string/opcionesAdm" />
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/opcionesAdm"
+                android:textColor="#F9FBFD" />
 
         </RelativeLayout>
     </ScrollView>

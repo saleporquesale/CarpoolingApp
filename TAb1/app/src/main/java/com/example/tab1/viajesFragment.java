@@ -65,7 +65,8 @@ public class viajesFragment extends Fragment
         agregarAmigos=vista.findViewById(R.id.agregarAmigosViajeBtn);
         agregado= MenuBottom.getAgregadoViaje();
         //Agregando un nuevo pasajero
-        amigosAgregadosALID =agregarPasajero(pasajerosMaximo, amigosAgregadosALID,agregado);
+
+        amigosAgregadosALID =agregarPasajero(pasajerosMaximo, amigosAgregadosALID);
         // Agregar amigos viaje btn
         agregarAmigos.setOnClickListener(new View.OnClickListener()
         {
@@ -86,7 +87,7 @@ public class viajesFragment extends Fragment
         amigosAgregadosLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id)
             {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
                 dialogo1.setTitle("Eliminar amigo del viaje");
@@ -94,6 +95,8 @@ public class viajesFragment extends Fragment
                 dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id)
                     {
+                        amigosAgregadosAL.remove(position);
+                        amigosAgregadosALID.remove(position);
                         amigosAgregadosLV.setAdapter(arrayAdapterAmigos);
                     }
                 });
@@ -141,6 +144,10 @@ public class viajesFragment extends Fragment
                     JSONParser parser = new JSONParser();
                     JSONArray resultadoPost=new JSONArray();
                     Toast.makeText(getContext(),"Creando viaje",Toast.LENGTH_SHORT).show();
+                    agregado="";
+                    amigosAgregadosAL.clear();
+                    amigosAgregadosALID.clear();
+                    amigosAgregadosLV.setAdapter(arrayAdapterAmigos);
                 }
                 else
                 {
@@ -153,8 +160,15 @@ public class viajesFragment extends Fragment
 
         return vista;
     }
+    private void setAmigosAgregadosAL()
+    {
+        if(agregado.length()>0)
+        {
+
+        }
+    }
     //Agregando a alguien a la lista del viaje en el caso de que exista algun campo para el
-    private ArrayList<String> agregarPasajero(int pasajerosMaximo,ArrayList<String> agregadosWithId,String agregado)
+    private ArrayList<String> agregarPasajero(int pasajerosMaximo,ArrayList<String> agregadosWithId)
     {
         if(agregado.length()>0)
         {
@@ -165,8 +179,11 @@ public class viajesFragment extends Fragment
                     ArrayList<String> datos=new ArrayList<>(Arrays.asList(agregado.split(",")));
                     amigosAgregadosAL.add(datos.get(0)+"\nTelefono: "+datos.get(2));
                     agregadosWithId.add(datos.get(1));
+                    MenuBottom.setAgregadoViaje("");
+                    agregado="";
                 }
             }
+
         }
         return agregadosWithId;
     }

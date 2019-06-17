@@ -48,6 +48,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="-10dp"
                 android:layout_marginEnd="20dp"
+                android:background="@drawable/roundedbutton"
                 android:backgroundTint="@color/colorAccent"
                 android:drawableBottom="@drawable/ic_person_add_black_24dp"
                 android:textColor="@color/colorPrimary"
@@ -87,7 +88,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="30dp"
-                android:text="@string/crearViajeBtn" />
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/crearViajeBtn"
+                android:textColor="#F9FBFD" />
 
         </RelativeLayout>
     </ScrollView>

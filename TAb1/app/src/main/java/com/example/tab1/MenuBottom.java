@@ -83,4 +83,8 @@ public class MenuBottom extends AppCompatActivity {
         }
         return agregadoViaje;
     }
+    public static String setAgregadoViaje(String agregado)
+    {
+        return agregado;
+    }
 }

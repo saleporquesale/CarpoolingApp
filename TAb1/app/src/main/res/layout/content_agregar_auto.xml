@@ -74,7 +74,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="35dp"
                 android:layout_marginEnd="30dp"
-                android:text="@string/guardarVehiculo" />
+                android:text="@string/guardarVehiculo"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="#F9FBFD"
+                android:background="@drawable/roundedbutton"/>
 
             <EditText
                 android:id="@+id/placaET"

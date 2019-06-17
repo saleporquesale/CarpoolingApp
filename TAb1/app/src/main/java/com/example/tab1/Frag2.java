@@ -67,6 +67,7 @@ public class Frag2 extends Fragment {
             @Override
             public void onSuccess(LoginResult loginResult)
             {
+
                 facebook=true;
             }
             @Override

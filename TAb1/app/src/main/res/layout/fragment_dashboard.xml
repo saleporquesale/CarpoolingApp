@@ -12,6 +12,56 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/idCantidadDePuntos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/CantidadPuntos"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/tablaPuntosXcategoriaBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mostrarTabla" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Viajes por mes" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/viajesPorMes"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"></com.github.mikephil.charting.charts.BarChart>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diferencia entre chofer y pasajeros" />
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/diferenciaPasajeroChofer"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+            </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+            <Button
+                android:id="@+id/listaIntercambiosBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mostrarTabla" />
+
+            <Button
+                android:id="@+id/listaViajesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mostrarTabla" />
+
+        </LinearLayout>
     </ScrollView>
 </FrameLayout>
