@@ -17,7 +17,7 @@ public class Memoria {
     private static Memoria _Instancia = null;
     private List<Viaje> _Viajes;
     
-    private Memoria(){
+    Memoria(){
         this._Viajes = new LinkedList<Viaje>();
     }
     

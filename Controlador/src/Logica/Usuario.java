@@ -31,6 +31,16 @@ public class Usuario {
     }
     
     public Usuario(String pNombre, int pIdentificacion,
+            String pTelefono, String pCorreo, int pTipoDeUsuario,int pTipoDeCategoria) {
+        this._Nombre = pNombre;
+        this._Identificacion = pIdentificacion;
+        this._Telefono = pTelefono;
+        this._Correo = pCorreo;
+        this._TipoDeUsuario= pTipoDeUsuario;
+        this._TipoDeCategoria= pTipoDeCategoria;
+    }
+
+    public Usuario(String pNombre, int pIdentificacion,
             String pTelefono, String pCorreo) {
         this._Nombre = pNombre;
         this._Identificacion = pIdentificacion;

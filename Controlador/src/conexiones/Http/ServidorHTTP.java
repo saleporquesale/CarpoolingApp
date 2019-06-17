@@ -26,6 +26,7 @@ import conexiones.Http.peticiones.NotificacionesHandler;
 import conexiones.Http.peticiones.PerfilAgregarVehiculosHandler;
 import conexiones.Http.peticiones.PerfilAmigosHandler;
 import conexiones.Http.peticiones.PerfilBuscarAmigosHandler;
+import conexiones.Http.peticiones.PerfilEliminarHandler;
 import conexiones.Http.peticiones.PerfilHandler;
 import conexiones.Http.peticiones.PerfilVehiculosHandler;
 import conexiones.Http.peticiones.PuntosHandler;
@@ -104,5 +105,6 @@ public class ServidorHTTP {
         this._Servidor.createContext("/Administrador/Categoria/Agregar", new CategoriaAgregarHandler());
         this._Servidor.createContext("/Viaje/Rechazar", new RechazarViajeHandler());
         this._Servidor.createContext("/Perfil/Vehiculos/Eliminar", new VehiculoEliminarHandler());
+        this._Servidor.createContext("/Perfil/Deshabilitar", new PerfilEliminarHandler());
     }
 }

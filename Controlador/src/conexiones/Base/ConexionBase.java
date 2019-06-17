@@ -648,4 +648,32 @@ public class ConexionBase {
             Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void eliminarPerfil(int pId){
+        try{
+            PreparedStatement consulta;
+            consulta = this._Conexion.prepareStatement("call EliminarPerfil(?)");
+            consulta.setInt(1, pId);
+            consulta.executeUpdate();
+                    
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public boolean estaVerificado(int pId){
+        boolean verificado = false;
+        try{
+            PreparedStatement consulta;
+            consulta = this._Conexion.prepareStatement("call Habilitado(?)");
+            consulta.setInt(1, pId);
+            ResultSet respuesta = consulta.executeQuery();
+            while (respuesta.next()){
+                verificado = respuesta.getBoolean("Habilitado");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return verificado;
+    }
 }
