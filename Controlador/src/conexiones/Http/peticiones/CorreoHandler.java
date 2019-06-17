@@ -6,7 +6,6 @@
 package conexiones.Http.peticiones;
 
 import Auxiliares.Constantes;
-import Logica.Usuario;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import conexiones.Base.ConexionBase;
@@ -28,42 +27,38 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class PerfilAmigosHandler implements HttpHandler {
+public class CorreoHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
         if (he.getRequestMethod().compareTo("GET") == 0) {
-            System.out.println(he.getRequestMethod() + " /Perfil/Amigos");
+            System.out.println(he.getRequestMethod() + " /");
         } else if (he.getRequestMethod().compareTo("POST") == 0) {
             try {
-                System.out.println(he.getRequestMethod() + " /Perfil/Amigos");
+                System.out.println(he.getRequestMethod() + " /Administrador/Correo");
                 JSONParser jsonParser = new JSONParser();
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
-                os.write(this.stringRespuesta(JSONIngreso).getBytes());
+                os.write(stringRespuesta().getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(PerfilAmigosHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CorreoHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    private String stringRespuesta(JSONObject pJSON) {
-        JSONArray JSONamigos = new JSONArray();
-        List<Usuario> amigos = ConexionBase.getInstancia().
-                amigos(Integer.parseInt(pJSON.get("id").toString()));
-        for (int index = 0; index < amigos.size(); index++) {
-            Usuario amigo = amigos.get(index);
-            JSONObject JSONAmigo = new JSONObject();
-            JSONAmigo.put("nombre", amigo.getNombre());
-            JSONAmigo.put("id", amigo.getIdentificacion());
-            JSONAmigo.put("telefono", amigo.getTelefono());
-            JSONamigos.add(JSONAmigo);
+    private String stringRespuesta() {
+        JSONArray JSONcorreos = new JSONArray();
+        List<String> correos = ConexionBase.getInstancia().obternerCorreos();
+        for (int index = 0; index < correos.size(); index++) {
+            JSONObject JSONcorreo = new JSONObject();
+            JSONcorreo.put("correo", correos.get(index));
+            JSONcorreos.add(JSONcorreo);
         }
-        System.out.println(JSONamigos.toJSONString());
-        return JSONamigos.toJSONString();
+        System.out.println(JSONcorreos.toJSONString());
+        return JSONcorreos.toJSONString();
     }
 }

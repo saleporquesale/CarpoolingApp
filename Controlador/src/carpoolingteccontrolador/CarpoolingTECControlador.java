@@ -5,6 +5,9 @@
  */
 package carpoolingteccontrolador;
 
+import Auxiliares.GeneradorCodigos;
+import Auxiliares.GeneradorParqueos;
+import Auxiliares.Utilidades;
 import conexiones.Base.ConexionBase;
 import conexiones.Http.ServidorHTTP;
 import java.sql.SQLException;
@@ -21,8 +24,15 @@ public class CarpoolingTECControlador {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ///*
         ServidorHTTP servidor = ServidorHTTP.getInstancia();
         servidor.iniciar();
+        //*/
+        /*
+        for (int i=0; i<300;i++){
+            System.out.println(GeneradorParqueos.getInstancia().generar());
+        }
+        */
     }
     
 }

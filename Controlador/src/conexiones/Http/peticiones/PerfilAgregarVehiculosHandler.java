@@ -33,7 +33,7 @@ public class PerfilAgregarVehiculosHandler implements HttpHandler {
             System.out.println(he.getRequestMethod() + " /");
         } else if (he.getRequestMethod().compareTo("POST") == 0) {
             try {
-                System.out.println(he.getRequestMethod() + " /");
+                System.out.println(he.getRequestMethod() + " /Perfil/Vehiculos/Agregar");
                 JSONParser jsonParser = new JSONParser();
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));

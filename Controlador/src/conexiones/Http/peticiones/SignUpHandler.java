@@ -30,10 +30,10 @@ public class SignUpHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange he) throws IOException {
         if (he.getRequestMethod().compareTo("GET") == 0) {
-            System.out.println(he.getRequestMethod() + " /");
+            System.out.println(he.getRequestMethod() + " /SignUp");
         } else if (he.getRequestMethod().compareTo("POST") == 0) {
             try {
-                System.out.println(he.getRequestMethod() + " /");
+                System.out.println(he.getRequestMethod() + " /SignUp");
                 JSONParser jsonParser = new JSONParser();
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
