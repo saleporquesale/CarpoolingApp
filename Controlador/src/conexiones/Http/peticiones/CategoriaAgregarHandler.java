@@ -6,7 +6,6 @@
 package conexiones.Http.peticiones;
 
 import Auxiliares.Constantes;
-import Logica.Usuario;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import conexiones.Base.ConexionBase;
@@ -28,42 +27,31 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class PerfilAmigosHandler implements HttpHandler {
+public class CategoriaAgregarHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
         if (he.getRequestMethod().compareTo("GET") == 0) {
-            System.out.println(he.getRequestMethod() + " /Perfil/Amigos");
+            System.out.println(he.getRequestMethod() + " /");
         } else if (he.getRequestMethod().compareTo("POST") == 0) {
             try {
-                System.out.println(he.getRequestMethod() + " /Perfil/Amigos");
+                System.out.println(he.getRequestMethod() + " /Administrador/Categoria/Agregar");
                 JSONParser jsonParser = new JSONParser();
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
+                ConexionBase.getInstancia().crearNuevaCategoria(
+                        JSONIngreso.get("categoria").toString(), 
+                        Integer.parseInt(JSONIngreso.get("viajesmin").toString()), 
+                        Integer.parseInt(JSONIngreso.get("puntosmin").toString()),
+                        Integer.parseInt(JSONIngreso.get("puntostotales").toString()));
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
-                os.write(this.stringRespuesta(JSONIngreso).getBytes());
+                os.write(Constantes.Constante_OK.getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(PerfilAmigosHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CategoriaAgregarHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    private String stringRespuesta(JSONObject pJSON) {
-        JSONArray JSONamigos = new JSONArray();
-        List<Usuario> amigos = ConexionBase.getInstancia().
-                amigos(Integer.parseInt(pJSON.get("id").toString()));
-        for (int index = 0; index < amigos.size(); index++) {
-            Usuario amigo = amigos.get(index);
-            JSONObject JSONAmigo = new JSONObject();
-            JSONAmigo.put("nombre", amigo.getNombre());
-            JSONAmigo.put("id", amigo.getIdentificacion());
-            JSONAmigo.put("telefono", amigo.getTelefono());
-            JSONamigos.add(JSONAmigo);
-        }
-        System.out.println(JSONamigos.toJSONString());
-        return JSONamigos.toJSONString();
     }
 }

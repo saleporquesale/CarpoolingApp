@@ -6,6 +6,7 @@
 package conexiones.Http.peticiones;
 
 import Auxiliares.Constantes;
+import Logica.Notificacion;
 import Logica.Usuario;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -28,15 +29,15 @@ import org.json.simple.parser.ParseException;
  *
  * @author jeja1
  */
-public class PerfilAmigosHandler implements HttpHandler {
+public class NotificacionesHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
         if (he.getRequestMethod().compareTo("GET") == 0) {
-            System.out.println(he.getRequestMethod() + " /Perfil/Amigos");
+            System.out.println(he.getRequestMethod() + " /");
         } else if (he.getRequestMethod().compareTo("POST") == 0) {
             try {
-                System.out.println(he.getRequestMethod() + " /Perfil/Amigos");
+                System.out.println(he.getRequestMethod() + " /Notificaciones");
                 JSONParser jsonParser = new JSONParser();
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
@@ -46,21 +47,21 @@ public class PerfilAmigosHandler implements HttpHandler {
                 os.write(this.stringRespuesta(JSONIngreso).getBytes());
                 os.close();
             } catch (ParseException ex) {
-                Logger.getLogger(PerfilAmigosHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NotificacionesHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
     private String stringRespuesta(JSONObject pJSON) {
         JSONArray JSONamigos = new JSONArray();
-        List<Usuario> amigos = ConexionBase.getInstancia().
-                amigos(Integer.parseInt(pJSON.get("id").toString()));
-        for (int index = 0; index < amigos.size(); index++) {
-            Usuario amigo = amigos.get(index);
+        List<Notificacion> Notificaciones = ConexionBase.getInstancia().
+                notificaciones(Integer.parseInt(pJSON.get("id").toString()));
+        for (int index = 0; index < Notificaciones.size(); index++) {
+            Notificacion amigo = Notificaciones.get(index);
             JSONObject JSONAmigo = new JSONObject();
-            JSONAmigo.put("nombre", amigo.getNombre());
-            JSONAmigo.put("id", amigo.getIdentificacion());
-            JSONAmigo.put("telefono", amigo.getTelefono());
+            JSONAmigo.put("id", amigo.getID());
+            JSONAmigo.put("mensaje", amigo.getTexto());
+            JSONAmigo.put("tipo", amigo.getTipo());
             JSONamigos.add(JSONAmigo);
         }
         System.out.println(JSONamigos.toJSONString());

@@ -33,13 +33,15 @@ public class GuardarPerfilHandler implements HttpHandler {
             System.out.println(he.getRequestMethod() + " /");
         } else if (he.getRequestMethod().compareTo("POST") == 0) {
             try {
-                System.out.println(he.getRequestMethod() + " /");
+                System.out.println(he.getRequestMethod() + " /Perfil/Guardar");
                 JSONParser jsonParser = new JSONParser();
                 JSONObject JSONIngreso = (JSONObject) jsonParser.
                         parse(new InputStreamReader(he.getRequestBody()));
                 System.out.println(JSONIngreso.toJSONString());
-                ConexionBase.getInstancia().perfil(Integer.
-                        parseInt(JSONIngreso.get("id").toString()));
+                ConexionBase.getInstancia().guardarPerfil(
+                        Integer.parseInt(JSONIngreso.get("id").toString()),
+                        JSONIngreso.get("nombre").toString(),
+                        JSONIngreso.get("telefono").toString());
                 he.sendResponseHeaders(200, 0);
                 OutputStream os = he.getResponseBody();
                 os.write(Constantes.Constante_OK.getBytes());
